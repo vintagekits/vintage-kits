@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vintage Kits</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #fff;
+            color: #b8860b;
+            display: flex;
+        }
+        nav {
+            background-color: #b8860b;
+            padding: 10px;
+            width: 100%;
+            text-align: center;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+        }
+        nav a {
+            color: white;
+            margin: 10px;
+            text-decoration: none;
+            font-weight: bold;
+        }
+        #panier {
+            width: 250px;
+            background-color: #fff;
+            padding: 10px;
+            position: fixed;
+            left: 0;
+            top: 50px;
+            bottom: 0;
+            overflow-y: auto;
+            border-right: 2px solid #b8860b;
+        }
+        .contenu {
+            margin-left: 270px;
+            margin-top: 60px;
+            padding: 20px;
+        }
+        .produit {
+            border: 2px solid #b8860b;
+            padding: 10px;
+            margin: 10px;
+            display: inline-block;
+            width: 200px;
+            text-align: center;
+            background-color: #fff;
+            transition: transform 0.3s ease;
+        }
+        .produit:hover {
+            transform: scale(1.05);
+        }
+        .produit img {
+            width: 100%;
+            height: auto;
+        }
+        .ajouter-panier, .retirer-panier {
+            background-color: #b8860b;
+            color: white;
+            border: none;
+            padding: 5px;
+            cursor: pointer;
+            margin-top: 5px;
+        }
+        .ajouter-panier:hover, .retirer-panier:hover {
+            background-color: #a07000;
+        }
+        .commande {
+            margin-top: 20px;
+            padding: 10px;
+            background-color: #b8860b;
+            color: white;
+            text-align: center;
+        }
+    </style>
+    <script>
+        let total = 0;
+        let panierItems = [];
+
+        function ajouterAuPanier(nom, prix) {
+            let panier = document.getElementById("contenu-panier");
+            let item = document.createElement("div");
+            item.textContent = nom + " - " + prix + "€";
+            
+            let boutonRetirer = document.createElement("button");
+            boutonRetirer.textContent = "Retirer";
+            boutonRetirer.className = "retirer-panier";
+            boutonRetirer.onclick = function() {
+                panier.removeChild(item);
+                total -= prix;
+                panierItems = panierItems.filter(p => p !== nom);
+                mettreAJourTotal();
+            };
+
+            item.appendChild(boutonRetirer);
+            panier.appendChild(item);
+            
+            total += prix;
+            panierItems.push(nom);
+            mettreAJourTotal();
+        }
+
+        function mettreAJourTotal() {
+            let totalElement = document.getElementById("total");
+            totalElement.textContent = "Total: " + total + "€";
+        }
+
+        function passerCommande() {
+            if (panierItems.length > 0) {
+                let detailsCommande = panierItems.join(', ') + " - Total: " + total + "€";
+                alert("Commande passée avec succès : " + detailsCommande);
+            } else {
+                alert("Votre panier est vide.");
+            }
+        }
+    </script>
+</head>
+<body>
+    <nav>
+        <a href="#equipes-europeennes">Équipes Européennes</a>
+        <a href="#selections">Sélections</a>
+        <a href="#meilleurs-designs">Meilleurs Designs</a>
+    </nav>
+    
+    <div id="panier">
+        <h2>Panier</h2>
+        <div id="contenu-panier"><p>Aucun article</p></div>
+        <p id="total">Total: 0€</p>
+        <button class="commande" onclick="passerCommande()">Passer la commande</button>
+    </div>
+    
+    <div class="contenu">
+        <section id="equipes-europeennes">
+            <h2>Équipes Européennes</h2>
+            <div class="produit"><img src="https://cdn.shopify.com/s/files/1/0075/2484/0971/products/Arsenal_FC_Away_2024_2025_Kit_1_3000x.jpg?v=1690874727" alt="Maillot Arsenal"><h3>Arsenal (Extérieur)</h3><p>Maillot extérieur 2025</p><p>Prix: 120€</p><button class="ajouter-panier" onclick="ajouterAuPanier('Arsenal', 120)">Ajouter au panier</button></div>
+            <div class="produit"><img src="https://cdn.shopify.com/s/files/1/0232/4845/1407/products/chelsea_away_2025_800x.jpg?v=1687363692" alt="Maillot Chelsea"><h3>Chelsea (Extérieur)</h3><p>Maillot extérieur 2025</p><p>Prix: 115€</p><button class="ajouter-panier" onclick="ajouterAuPanier('Chelsea', 115)">Ajouter au panier</button></div>
+            <div class="produit"><img src="https://cdn.shopify.com/s/files/1/0075/2484/0971/products/Real_Madrid_Away_2024_2025_Kit_1_3000x.jpg?v=1690874731" alt="Maillot Real Madrid"><h3>Real Madrid (Extérieur)</h3><p>Maillot extérieur 2025</p><p>Prix: 130€</p><button class="ajouter-panier" onclick="ajouterAuPanier('Real Madrid', 130)">Ajouter au panier</button></div>
+            <div class="produit"><img src="https://cdn.shopify.com/s/files/1/0232/4845/1407/products/Manchester_United_Away_2025_800x.jpg?v=1687363691" alt="Maillot Manchester United"><h3>Manchester United (Extérieur)</h3><p>Maillot extérieur 2025</p><p>Prix: 125€</p><button class="ajouter-panier" onclick="ajouterAuPanier('Manchester United', 125)">Ajouter au panier</button></div>
+            <div class="produit"><img src="https://cdn.shopify.com/s/files/1/0202/4822/3187/products/Barcelona_Away_2024_2025_Kit_1_3000x.jpg?v=1690874734" alt="Maillot FC Barcelone"><h3>FC Barcelone (Extérieur)</h3><p>Maillot extérieur 2025</p><p>Prix: 120€</p><button class="ajouter-panier" onclick="ajouterAuPanier('FC Barcelone', 120)">Ajouter au panier</button></div>
+            <div class="produit"><img src="https://cdn.shopify.com/s/files/1/0202/4822/3187/products/PSG_Away_2024_2025_Kit_1_3000x.jpg?v=1690874732" alt="Maillot PSG"><h3>PSG (Extérieur)</h3><p>Maillot extérieur 2025</p><p>Prix: 110€</p><button class="ajouter-panier" onclick="ajouterAuPanier('PSG', 110)">Ajouter au panier</button></div>
+            <div class="produit"><img src="https://cdn.shopify.com/s/files/1/0245/4321/5819/products/Bayern_Munich_Away_2025_800x.jpg?v=1687363689" alt="Maillot Bayern Munich"><h3>Bayern Munich (Extérieur)</h3><p>Maillot extérieur 2025</p><p>Prix: 140€</p><button class="ajouter-panier" onclick="ajouterAuPanier('Bayern Munich', 140)">Ajouter au panier</button></div>
+            <div class="produit"><img src="https://cdn.shopify.com/s/files/1/0281/4285/6514/products/Manchester_City_Away_2025_800x.jpg?v=1687363687" alt="Maillot Manchester City"><h3>Manchester City (Extérieur)</h3><p>Maillot extérieur 2025</p><p>Prix: 125€</p><button class="ajouter-panier" onclick="ajouterAuPanier('Manchester City', 125)">Ajouter au panier</button></div>
+            <div class="produit"><img src="https://cdn.shopify.com/s/files/1/0232/4845/1407/products/Liverpool_Away_2025_800x.jpg?v=1687363685" alt="Maillot Liverpool"><h3>Liverpool (Extérieur)</h3><p>Maillot extérieur 2025</p><p>Prix: 120€</p><button class="ajouter-panier" onclick="ajouterAuPanier('Liverpool', 120)">Ajouter au panier</button></div>
+        </section>
+        
+        <section id="selections">
+            <h2>Sélections</h2>
+            <div class="produit"><img src="https://cdn.shopify.com/s/files/1/0560/3304/4925/products/france_away_kit_2025_800x.jpg?v=1688029375" alt="Maillot France"><h3>France (Extérieur)</h3><p>Maillot extérieur 2025</p><p>Prix: 110€</p><button class="ajouter-panier" onclick="ajouterAuPanier('France', 110)">Ajouter au panier</button></div>
+            <div class="produit"><img src="https://cdn.shopify.com/s/files/1/0560/3304/4925/products/italy_away_kit_2025_800x.jpg?v=1688029378" alt="Maillot Italie"><h3>Italie (Extérieur)</h3><p>Maillot extérieur 2025</p><p>Prix: 105€</p><button class="ajouter-panier" onclick="ajouterAuPanier('Italie', 105)">Ajouter au panier</button></div>
+            <div class="produit"><img src="https://cdn.shopify.com/s/files/1/0560/3304/4925/products/spain_away_kit_2025_800x.jpg?v=1688029372" alt="Maillot Espagne"><h3>Espagne (Extérieur)</h3><p>Maillot extérieur 2025</p><p>Prix: 115€</p><button class="ajouter-panier" onclick="ajouterAuPanier('Espagne', 115)">Ajouter au panier</button></div>
+            <div class="produit"><img src="https://cdn.shopify.com/s/files/1/0560/3304/4925/products/england_away_kit_2025_800x.jpg?v=1688029373" alt="Maillot Angleterre"><h3>Angleterre (Extérieur)</h3><p>Maillot extérieur 2025</p><p>Prix: 120€</p><button class="ajouter-panier" onclick="ajouterAuPanier('Angleterre', 120)">Ajouter au panier</button></div>
+            <div class="produit"><img src="https://cdn.shopify.com/s/files/1/0560/3304/4925/products/germany_away_kit_2025_800x.jpg?v=1688029376" alt="Maillot Allemagne"><h3>Allemagne (Extérieur)</h3><p>Maillot extérieur 2025</p><p>Prix: 110€</p><button class="ajouter-panier" onclick="ajouterAuPanier('Allemagne', 110)">Ajouter au panier</button></div>
+            <!-- Ajouter d'autres produits ici -->
+        </section>
+
+        <section id="meilleurs-designs">
+            <h2>Meilleurs Designs</h2>
+            <div class="produit"><img src="https://cdn.shopify.com/s/files/1/0502/4820/2741/products/england_home_kit_2025_800x.jpg?v=1691655374" alt="Maillot Angleterre"><h3>Angleterre (Domicile)</h3><p>Maillot domicile 2025</p><p>Prix: 120€</p><button class="ajouter-panier" onclick="ajouterAuPanier('Angleterre Domicile', 120)">Ajouter au panier</button></div>
+            <!-- Ajouter d'autres produits ici -->
+        </section>
+    </div>
+</body>
+</html>
+
+
+
+ 
